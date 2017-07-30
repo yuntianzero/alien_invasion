@@ -23,6 +23,7 @@ def run_game():
     # 游戏主循环
     while True:
         gf.check_event(ship)
+        ship.update()
         gf.update_screen(ai_settings,screen, ship, doraemon)
 
        # screen.fill(ai_settings.bg_color)

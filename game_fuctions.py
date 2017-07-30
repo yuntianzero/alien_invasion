@@ -12,10 +12,26 @@ def check_event(ship):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 # 向右移动飞船
-                ship.rect.centerx += 1
+                ship.moving_right = True
             if event.key == pygame.K_LEFT:
                 # 向左移动飞船
-                ship.rect.centerx -= 1
+                ship.moving_left = True
+            if event.key == pygame.K_UP:
+                # 向上移动飞船
+                ship.moving_up = True
+            if event.key == pygame.K_DOWN:
+                # 向上移动飞船
+                ship.moving_down = True
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
+                ship.moving_right = False
+            if event.key == pygame.K_LEFT:
+                ship.moving_left = False
+            if event.key == pygame.K_UP:
+                ship.moving_up = False
+            if event.key == pygame.K_DOWN:
+                ship.moving_down = False
+
 
 
 
