@@ -16,13 +16,14 @@ def run_game():
     #  创建一艘飞船
     ship = Ship(ai_settings, screen)
     # 创建Doraemon
-    doraemon = Doraemon(screen)
+    doraemon = Doraemon(ai_settings,screen)
     #  背景色
     bg_color = (ai_settings.bg_color)
 	
     # 游戏主循环
     while True:
         gf.check_event(ship)
+        #doraemon.update()
         ship.update()
         gf.update_screen(ai_settings,screen, ship, doraemon)
 
