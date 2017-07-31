@@ -17,26 +17,22 @@ def run_game():
     #  创建一艘飞船
     ship = Ship(ai_settings, screen)
     # 创建Doraemon
-    doraemon = Doraemon(ai_settings,screen)
+    #doraemon = Doraemon(ai_settings,screen)
+    # 创建背景
+    background = pygame.image.load('images/doraemon.jpg').convert()
     # 创建一个存储子弹的编组
     bullets = Group()
     #  背景色
     bg_color = (ai_settings.bg_color)
-	
+
     # 游戏主循环
     while True:
+
         gf.check_event(ai_settings, screen, ship, bullets)
         #doraemon.update()
         ship.update()
-        bullets.update()
-
-        # 删除已消失的子弹
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)
-        print(len(bullets))
-
-        gf.update_screen(ai_settings,screen, ship, doraemon, bullets)
+        gf.update_bullets(bullets)
+        gf.update_screen(ai_settings,screen, ship, bullets, background)
 
        # screen.fill(ai_settings.bg_color)
        # ship.blitme()

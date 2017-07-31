@@ -17,10 +17,14 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         # 向上移动飞船
         ship.moving_down = True
     elif event.key == pygame.K_SPACE:
-        # 创建一颗子弹，并将其加入到编组bullets中
-        if len(bullets) < ai_settings.bullets_allowed:
-            new_bullet = Bullet(ai_settings, screen, ship)
-            bullets.add(new_bullet)
+        fire_bullet(ai_settings, screen, ship, bullets)
+
+def fire_bullet(ai_settings, screen, ship, bullets):
+    # 没有达到限制可以发射
+    # 创建一颗子弹，并将其加入到编组bullets中
+    if len(bullets) < ai_settings.bullets_allowed:
+        new_bullet = Bullet(ai_settings, screen, ship)
+        bullets.add(new_bullet)
 
 def check_keyup_events(event, ship):
     """响应松开"""
@@ -47,14 +51,24 @@ def check_event(ai_settings, screen, ship, bullets):
 
 
 
-def update_screen(ai_settings,screen, ship, doraemon, bullets):
+def update_screen(ai_settings,screen, ship,  bullets, background):
     # 每次循环都重绘屏幕
     screen.fill(ai_settings.bg_color)
+    screen.blit(background, (ai_settings.screen_width/2-background.get_rect().centerx, ai_settings.screen_height/2-background.get_rect().centery))
     # 在飞船和外星人后面重绘所有子弹
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
-    doraemon.blitme()
-
+    #doraemon.blitme()
     # 让最近绘制的屏幕可见
     pygame.display.flip()
+
+def update_bullets(bullets):
+    """更新子弹的位置，并且删除已消失的子弹"""
+    # 更新子弹的位置
+    bullets.update()
+
+    # 删除已消失的子弹
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
